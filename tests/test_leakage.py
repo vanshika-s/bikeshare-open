@@ -64,3 +64,67 @@ def test_no_missing_values(feats):
 def test_dates_are_sorted_and_unique(feats):
     assert feats.dteday.is_monotonic_increasing
     assert feats.dteday.is_unique
+
+
+
+def test_weather_severity_roll_3_exists(feats):
+    """The new feature must be included in the model's feature list."""
+    assert "weather_severity_roll_3" in feature_columns(feats)
+
+
+def test_weather_severity_roll_3_calculation_is_correct(feats):
+    """Use the previous three calendar days, excluding today."""
+    by_date = feats.set_index("dteday")
+    date = pd.Timestamp("2012-05-15")
+
+    assert date in by_date.index
+
+    previous_days = [
+        date - pd.Timedelta(days=k)
+        for k in (3, 2, 1)
+    ]
+
+    assert all(d in by_date.index for d in previous_days)
+
+    expected = sum(
+        by_date.loc[d, "weather_severity"]
+        for d in previous_days
+    ) / 3
+
+    actual = by_date.loc[date, "weather_severity_roll_3"]
+
+    assert actual == pytest.approx(expected)
+
+
+def test_weather_severity_roll_3_with_missing_calendar_date():
+    """A missing calendar day must not be treated as an available observation."""
+    raw = load_raw().copy()
+    raw["dteday"] = pd.to_datetime(raw["dteday"])
+
+    missing_date = pd.Timestamp("2012-05-13")
+    affected_date = pd.Timestamp("2012-05-15")
+    unaffected_date = pd.Timestamp("2012-05-21")
+
+    raw = raw.loc[raw["dteday"] != missing_date].copy()
+
+    feats = build_features(raw)
+    by_date = feats.set_index("dteday")
+
+    assert "weather_severity_roll_3" in feats.columns
+
+    assert affected_date not in by_date.index
+    assert unaffected_date in by_date.index
+
+    previous_days = [
+        unaffected_date - pd.Timedelta(days=k)
+        for k in (1, 2, 3)
+    ]
+
+    expected = raw.set_index("dteday").loc[
+        previous_days, "weather"
+    ].map({"GOOD": 0, "MISTY": 1, "BAD": 2}).mean()
+
+    actual = by_date.loc[unaffected_date, "weather_severity_roll_3"]
+
+    assert actual == pytest.approx(expected)
+
