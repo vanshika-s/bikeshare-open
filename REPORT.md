@@ -49,3 +49,34 @@ The agent found no confirmed issues and reported that all 17 tests passed. Some 
 The relative growth approach assumes that the previous day's actual rental count is available when making a prediction.
 
 No further changes to the implementation were needed after the review.
+
+## Exercise 5: Ridge vs. Persistence
+
+### Results
+
+| Model | Validation R2 | Validation MAE | Test R2 | Test MAE |
+|---|---:|---:|---:|---:|
+| Persistence | 0.4507 | 900.6 | 0.5099 | 840.1 |
+| Ridge | 0.6639 | 809.8 | 0.6022 | 920.3 |
+
+Ridge performs better than persistence on both validation metrics. However, the test results show a different pattern. Ridge improves test R2 by 0.0923, but its MAE increases by 80.2 rentals, which is approximately a 9.5% increase.
+
+### Interpretation
+
+R2 and MAE measure prediction errors differently. R2 is based on squared errors, which give more weight to larger errors. MAE measures the average absolute difference between predicted and actual rental counts.
+
+Ridge can have a higher R2 while still having a worse MAE because reducing squared errors does not necessarily reduce average absolute errors. Further analysis of individual predictions would be needed to understand which days contributed most to this difference.
+
+### Conclusion
+
+Although Ridge performs better on the validation set, its improvement does not carry over to both test metrics. If the main objective is to minimize average absolute prediction error, I would recommend the persistence baseline.
+
+Persistence achieves a lower test MAE by simply predicting the previous day's rental count. These results show why comparing a model against a simple baseline is important before deciding whether the additional complexity is worthwhile.
+
+### Agent Interaction
+
+I asked Claude Code to interpret the results and explain the difference between R2 and MAE. The agent correctly identified the overall performance tradeoff and recommended persistence when minimizing MAE.
+
+I verified the calculations using reports/metrics.json and corrected the absolute difference in test MAE. I also revised the explanation of extrapolation because Ridge, unlike tree-based models, can extrapolate beyond the training target range.
+
+No additional model tuning was performed for this comparison.
