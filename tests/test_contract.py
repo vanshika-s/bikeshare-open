@@ -56,3 +56,15 @@ def test_persistence_baseline_is_reported():
     """The baseline that matters for a lag-driven model is 'yesterday again'.
     It must be in the comparison, whatever its score."""
     assert "baseline_persistence" in MODELS
+
+
+def test_raw_schema_has_no_unexpected_columns(raw):
+    expected = {
+        "instant", "dteday", "season", "yr", "mnth",
+        "holiday", "weekday", "temp", "atemp", "hum",
+        "windspeed", "casual", "registered", "cnt",
+        "workday", "weather", "days_since_2011", "cnt_2d_bfr"
+    }
+
+    unexpected = set(raw.columns) - expected
+    assert not unexpected, f"Unexpected raw columns: {sorted(unexpected)}"
