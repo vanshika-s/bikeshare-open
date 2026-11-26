@@ -68,6 +68,10 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
     # --- Weather: measured same-day, available to a forecaster ----------
     out["weather_severity"] = encode_weather(out.weather)
 
+    out["weather_severity_roll_3"] = (
+        out["weather_severity"].shift(1).rolling(3).mean()
+    )
+
     # --- Lagged target: past values only. shift(1) is the whole ballgame;
     # without it, cnt_roll_7 would contain today's count. -----------------
     # If you add a longer lag, raise LAG_WARMUP in src/config.py.
