@@ -44,3 +44,21 @@ This helped me understand why writing tests before implementing a feature is use
 - Use Python for calculations in the compare-models skill to improve the reliability of model comparisons.
 
 - Keep the original temporal split and avoid tuning models using test results.
+
+### Exercise 1: TDD Commit History
+
+The original feature and tests were committed together
+in f656469 after completing the testing process.
+
+I reconstructed the red and green stages on a separate
+branch called exercise-1-tdd-reconstruction using the
+original committed tests and implementation.
+
+- Red commit (1afc03e): 3 failed, 7 passed.
+- Green commit (1971e2d): 10 passed.
+
+These commits demonstrate the testing process retrospectively
+without changing the original main branch history.
+
+Branch:
+https://github.com/vanshika-s/bikeshare-open/tree/exercise-1-tdd-reconstruction
