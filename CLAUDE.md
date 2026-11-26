@@ -50,3 +50,5 @@ rides) from calendar, weather, and lagged-demand features.
   rather than relying on manual calculations.
 - Keep validation experiments separate from final test
   evaluation. Never use test results for model tuning.
+
+- Use the compare-models skill to compare saved metrics without retraining.

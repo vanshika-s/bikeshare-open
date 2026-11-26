@@ -15,12 +15,20 @@ The data is split chronologically, with 2011 used for
 training, the first half of 2012 for validation, and the
 second half of 2012 for testing.
 
-| Model | Validation R2 | Validation MAE | Test R2 | Test MAE |
-|---|---:|---:|---:|---:|
-| Mean baseline | -0.9318 | 2002.2 | -2.1441 | 2847.7 |
-| Persistence | 0.4507 | 900.6 | 0.5099 | 840.1 |
-| Ridge | 0.6639 | 809.8 | 0.6022 | 920.3 |
-| HGB | 0.2160 | 1299.0 | -0.4975 | 1975.6 |
+| Model | Stage | Validation R2 | Validation MAE | Test R2 | Test MAE |
+|---|---|---:|---:|---:|---:|
+| Mean baseline | Before | -0.9318 | 2002.2 | -2.1441 | 2847.7 |
+| Persistence | Before | 0.4507 | 900.6 | 0.5099 | 840.1 |
+| Ridge | Before | 0.6475 | 832.9 | 0.5833 | 947.1 |
+| HGB | Before | 0.2185 | 1296.6 | -0.4975 | 1972.6 |
+| Mean baseline | After | -0.9318 | 2002.2 | -2.1441 | 2847.7 |
+| Persistence | After | 0.4507 | 900.6 | 0.5099 | 840.1 |
+| Ridge | After | 0.6639 | 809.8 | 0.6022 | 920.3 |
+| HGB | After | 0.2160 | 1299.0 | -0.4975 | 1975.6 |
+
+The before values are the starter reference results from
+the assignment. The after values are from the verified
+pipeline with the new feature.
 
 I added weather_severity_roll_3, which calculates the
 average weather severity over the previous three calendar
