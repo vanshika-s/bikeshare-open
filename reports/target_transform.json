@@ -1,0 +1,39 @@
+{
+  "n_features": 15,
+  "n_train": 348,
+  "n_valid": 182,
+  "target_stats": {
+    "train_min": 431.0,
+    "train_max": 6043.0,
+    "valid_min": 1027.0,
+    "valid_max": 8362.0,
+    "log_train_min": 6.0684,
+    "log_train_max": 8.7068,
+    "log_valid_min": 6.9354,
+    "log_valid_max": 9.0316
+  },
+  "n_valid_exceeding_max_train": 71,
+  "approaches": {
+    "original": {
+      "r2": 0.216,
+      "mae": 1299.0,
+      "mean_predicted": 3955.9,
+      "mean_actual": 5152.1,
+      "mean_error": -1196.2
+    },
+    "log": {
+      "r2": 0.168,
+      "mae": 1341.6,
+      "mean_predicted": 3852.2,
+      "mean_actual": 5152.1,
+      "mean_error": -1299.9
+    },
+    "relative_growth": {
+      "r2": 0.5877,
+      "mae": 866.7,
+      "mean_predicted": 4576.8,
+      "mean_actual": 5152.1,
+      "mean_error": -575.3
+    }
+  }
+}
