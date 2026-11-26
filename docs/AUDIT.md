@@ -91,3 +91,26 @@ I rejected the auditor's recommendation and did not modify StandardScaler. The r
 The peer audit and self-audit showed two different limitations of the automated auditor. During the peer audit, the agent missed a reproducibility concern related to the target transformation experiments. During the self-audit, it incorrectly identified a problem with StandardScaler.
 
 In both cases, the agent reported high confidence. This showed me that confidence alone is not enough to determine whether an audit is accurate. Manually reviewing the code and running tests helped me make better decisions about which findings to accept.
+
+## Audit Output
+
+The automated audit results for both repositories are saved
+in reports/audit.jsonl. The local directory paths were
+replaced with the corresponding GitHub repository names
+for privacy. All other audit results remain unchanged.
+
+The self-audit was conducted before the later exercises
+and additional guardrail improvements.
+
+## Additional Leakage Review
+
+I attempted an independent review using the existing
+leakage-auditor instructions. The agent identified that
+the rolling weather feature uses historical weather
+values rather than the target and reported that the
+existing tests passed.
+
+The review was stopped before all five checks were
+completed. Temporary verification scripts created during
+the review were removed. No changes were made to the
+tracked source code.
