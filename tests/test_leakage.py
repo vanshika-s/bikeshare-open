@@ -128,3 +128,21 @@ def test_weather_severity_roll_3_with_missing_calendar_date():
 
     assert actual == pytest.approx(expected)
 
+
+
+def test_seven_day_calendar_lag(feats):
+    raw = load_raw().set_index("dteday")[TARGET]
+
+    for date, lag in feats.set_index("dteday").cnt_lag_7.items():
+        previous_date = date - pd.Timedelta(days=7)
+        assert previous_date in raw.index
+        assert lag == pytest.approx(raw.loc[previous_date])
+
+
+def test_unknown_weather_label_raises_error():
+    from src.features import encode_weather
+
+    weather = pd.Series(["GOOD", "UNKNOWN"])
+
+    with pytest.raises(ValueError, match="unmapped weather labels"):
+        encode_weather(weather)

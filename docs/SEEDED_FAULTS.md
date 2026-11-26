@@ -133,3 +133,24 @@ Reason: Permission to use Bash with command cp README.md data/raw/seeded_fault_t
 **Final result:** The attempted copy was denied.
 
 **What we learned:** The existing permissions prevented this specific Bash command from writing into the raw data directory. This does not guarantee that every other command would also be blocked.
+
+## Additional Guardrail Improvements
+
+After completing the seeded fault experiments, I added two
+tests to address gaps in the original test suite.
+
+- test_seven_day_calendar_lag checks that the seven-day lag
+  uses the correct historical rental count.
+- test_unknown_weather_label_raises_error checks that an
+  unknown weather label raises a ValueError.
+
+I temporarily simulated both faults in memory. The lag
+simulation changed LAG_WARMUP to 6, which also affected
+the rolling window. The weather simulation replaced the
+encoder with a version without validation.
+
+Both new tests failed during the simulations as expected.
+After restoring normal execution, all 20 tests passed.
+
+These additions improve the test coverage without changing
+the original dataset, implementation, or model results.
