@@ -39,3 +39,14 @@ rides) from calendar, weather, and lagged-demand features.
   cannot extrapolate to 2012. That is the headline result, not an error.
 - 2012-10-29 (Hurricane Sandy, 22 rides) is in the test set. Expect it in
   any residual plot.
+
+## Additional Guardrails
+
+- Do not modify or overwrite files in data/raw/.
+- Run the full test suite after implementation changes.
+- Verify automated audit findings against the actual code
+  before accepting recommendations or modifying files.
+- Use Python to calculate model performance differences
+  rather than relying on manual calculations.
+- Keep validation experiments separate from final test
+  evaluation. Never use test results for model tuning.
