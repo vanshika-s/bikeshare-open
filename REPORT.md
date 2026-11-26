@@ -80,3 +80,40 @@ I asked Claude Code to interpret the results and explain the difference between 
 I verified the calculations using reports/metrics.json and corrected the absolute difference in test MAE. I also revised the explanation of extrapolation because Ridge, unlike tree-based models, can extrapolate beyond the training target range.
 
 No additional model tuning was performed for this comparison.
+
+## Exercise 6: Custom Skill
+
+I created a custom skill called compare-models in
+.claude/skills/compare-models/SKILL.md.
+
+The purpose of this skill is to make model comparisons more
+consistent and reliable. It instructs the agent to read the
+existing metrics and use Python to calculate differences
+in model performance instead of calculating them manually.
+
+### Testing the Skill
+
+I tested the skill using the following command in Claude Code:
+
+/compare-models Compare Ridge against the mean and persistence baselines using the existing metrics.
+
+| Comparison | Split | R2 Difference | MAE Change |
+|---|---|---:|---:|
+| Ridge vs Mean | Validation | +1.5957 | -59.55% |
+| Ridge vs Mean | Test | +2.7463 | -67.68% |
+| Ridge vs Persistence | Validation | +0.2132 | -10.08% |
+| Ridge vs Persistence | Test | +0.0923 | +9.55% |
+
+The final version of the skill produced correct calculations
+and recommended persistence when minimizing MAE. I verified
+the results against the existing metrics and checked the
+Git working tree for unexpected changes.
+
+### Reflection
+
+Using Python for calculations made the skill more reliable.
+The skill also provides a consistent structure for comparing
+models without retraining them or changing the existing code.
+However, the interpretation of results still requires human
+review, since aggregate metrics alone cannot explain the
+performance of individual features.
